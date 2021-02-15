@@ -1,0 +1,446 @@
+@charset "UTF-8";
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+*:focus {
+  outline: none;
+}
+
+
+
+body {
+  text-align : center;
+  margin: 0;
+  padding: 0;
+  background-color: #92CFF0;
+  background: url("../img/sky.png")  no-repeat  center/cover  fixed;
+  
+  font-size: 16px;
+  color: #222;
+  font-family: 'Cute Font', cursive;
+  font-weight: 300;
+  text-align: center;
+}
+
+.bgimg{
+	background: url("../img/sky.png")  no-repeat  center/cover  fixed;
+	min-height: 100%;
+	background-position: :center;
+	background-size: cover;
+}
+
+#modifycontact-box {
+  position: relative;
+  margin: 5% auto;
+  width: 400px;
+  height: 400px;
+  background: #FFF;
+  
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+#insertcontact-box {
+  position: relative;
+  margin: 5% auto;
+  width: 400px;
+  height: 450px;
+  background: #FFF;
+  
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+#modifyuser-box {
+  position: relative;
+  margin: 5% auto;
+  width: 400px;
+  height: 480px;
+  background: #FFF;
+  
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+#join-box {
+  position: relative;
+  margin: 5% auto;
+  width: 400px;
+  height: auto;
+  background: #FFF;
+  
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+#main-box {
+  position: relative;
+  margin: 5% auto;
+  width: 600px;
+  height: auto;
+  background: #FFF;
+  
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+#adminmain-box {
+  position: relative;
+  margin: 5% auto;
+  width: 700px;
+  height: auto;
+  background: #FFF;
+  
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  
+  text-align: center;
+}
+
+#adminusermain-box {
+  position: relative;
+  margin: 5% auto;
+  width: 630px;
+  height: auto;
+  background: #FFF;
+  
+  border-radius: 20px;
+  font-family: 'Cute Font', cursive;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+#join-result-box {
+  position: relative;
+  margin: 5% auto;
+  width: 400px;
+  height: 200px;
+  background: #FFF;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+#login-box {
+  position: relative;
+  margin: 5% auto;
+  width: 400px;
+  height: 450px;
+  background: #FFF;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+
+
+h1 {
+  margin: 15px 0 20px 0;
+  font-weight: 300;
+  font-size: 28px;
+  text-align: center;
+  font-family: 'Cute Font', cursive;
+}
+
+h2 {
+  margin: 15px 0 20px 0;
+  font-weight: 300;
+  font-size: 35px;
+  text-align: center;
+  font-family: 'Cute Font', cursive;
+}
+
+
+input[type="text"],
+input[type="password"] {
+  display: inline-block;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 200px;
+  height: 32px;
+  border: none;
+  border-bottom: 1px solid #AAA;
+  font-family: 'Cute Font', cursive;
+  font-weight: 400;
+  font-size:20px;
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+input.name {
+  display: inline-block;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 100px;
+  height: 32px;
+  border: none;
+  border-bottom: 1px solid #AAA;
+  font-family: 'Cute Font', cursive;
+  font-weight: 400;
+  font-size: 20px;
+  transition: 0.2s ease;
+  text-align: center;
+}
+input.duplicate {
+  display: inline-block;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 120px;
+  height: 32px;
+  border: none;
+  border-bottom: 1px solid #AAA;
+  font-family: 'Cute Font', cursive;
+  font-weight: 400;
+  font-size: 20px;
+  transition: 0.2s ease;
+  text-align: center;
+}
+input.password {
+  display: inline-block;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 140px;
+  height: 32px;
+  border: none;
+  border-bottom: 1px solid #AAA;
+  font-family: 'Cute Font', cursive;
+  font-weight: 400;
+  font-size: 20px;
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+input.phone {
+  display: inline-block;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 50px;
+  height: 32px;
+  border: none;
+  border-bottom: 1px solid #AAA;
+  font-family: 'Cute Font', cursive;
+  font-weight: 400;
+  font-size: 20px;
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-bottom: 2px solid #16a085;
+  color: #16a085;
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+input[type="submit"] {
+  margin-top: 28px;
+  width: 120px;
+  height: 32px;
+  background: #8ECEF1;
+  border: none;
+  border-radius: 2px;
+  
+  color: #FFF;
+  font-family: 'Cute Font', cursive;
+  font-size:20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+  text-align: center;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  opacity: 0.8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: 0.1s ease;
+  text-align: center;
+}
+
+input[type="submit"]:active {
+  opacity: 1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  transition: 0.1s ease;
+  text-align: center;
+}
+input[type="radio"]:focus,
+input[type="password"]:focus {
+  border-bottom: 2px solid #16a085;
+  color: #16a085;
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+
+
+
+.right .loginwith {
+  display: block;
+  margin-bottom: 40px;
+  font-size: 28px;
+  color: #FFF;
+  text-align: center;
+}
+
+a{
+  color: #FFF;
+  font-family: 'Cute Font', cursive;
+  font-size:20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+  text-decoration : none;
+  text-align: center;
+}
+
+a.listing{
+  color: #8ECEF1;
+  font-family: 'Cute Font', cursive;
+  font-size:20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+  text-decoration : none;
+  text-align: center;	
+}
+
+
+table{
+  margin-top: 28px;
+  height: 32px;
+  background: #8ECEF1;
+  border: none;
+  border-radius: 5px;
+  padding-left : 10px;
+  padding-right : 10px;
+  padding : 5px;
+  
+  color: #FFF;
+  font-family: 'Cute Font', cursive;
+  font-weight: 500;
+  text-indent: 10px;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+  
+  margin-left: auto; 
+  margin-right: auto; 
+  text-align: center;
+}
+
+tr.listing{
+  margin-top: 28px;
+  height: 32px;
+  background: #FFF;
+  border: none;
+  border-radius: 5px;
+  padding-left : 10px;
+  padding-right : 10px;
+  
+  color: #8ECEF1;
+  font-family: 'Cute Font', cursive;
+  font-weight: 500;
+  text-indent: 10px;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+  
+  margin-left: auto; 
+  margin-right: auto; 
+  text-align: center;
+}
+
+th{
+  margin-top: 28px;
+  height: 32px;
+  background: #8ECEF1;
+  border: none;
+  border-radius: 5px;
+  padding-left : 0px;
+  padding-right : 10px;
+  
+  color: #FFF;
+  font-family: 'Cute Font', cursive;
+  font-weight: 500;
+  text-indent: 10px;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+  
+  margin-left: auto; 
+  margin-right: auto; 
+  text-align: center;
+	
+}
+
+td{
+  margin-top: 28px;
+  height: 32px;
+  background: #FFF;
+  border: none;
+  border-radius: 5px;
+  padding-left : 0px;
+  padding-right : 10px;
+  
+  color: #8ECEF1;
+  font-size:20px;
+  font-family: 'Cute Font', cursive;
+  font-weight: 500;
+  text-indent: 10px;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+  
+  margin-left: auto; 
+  margin-right: auto; 
+  text-align: center;
+	
+}
+
+button.social-signin {
+  margin-top: 28px;
+  width: 120px;
+  height: 32px;
+  background: #8ECEF1;
+  border: none;
+  border-radius: 2px;
+  margin-left : 5px;
+  margin-right : 5px;
+  
+  color: #FFF;
+  font-family: 'Cute Font', cursive;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+  text-align: center;
+}
+
+button.social-signin:hover,
+button.social-signin:focus {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+button.social-signin:active {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  transition: 0.2s ease;
+  text-align: center;
+}
+
