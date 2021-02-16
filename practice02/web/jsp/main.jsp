@@ -41,7 +41,7 @@
 	<h2>${name}님 환영합니다</h2>
 	<button class="social-signin"><a href="<%=request.getContextPath()%>/LogoutServlet">로그아웃</a></button>
 	<button class="social-signin"><a href="<%=request.getContextPath()%>/ModifyUserServlet">회원정보수정</a></button>
-	<form action="<%=request.getContextPath()%>/jsp/main_KS.jsp" method="get">
+	<form action="<%=request.getContextPath()%>/main_KS.jsp" method="get">
 		<select name="keyword">
 			<option value="name">이름</option>
 			<option value="phone">연락처</option>

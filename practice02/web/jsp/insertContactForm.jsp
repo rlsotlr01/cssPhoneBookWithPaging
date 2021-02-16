@@ -38,7 +38,7 @@
 		<br>
 		<a href="<%=request.getContextPath()%>/MainServlet"><img src="<%=request.getContextPath()%>/img/home.png" border="0" width="40" height="40" align="center"></a>
 </form>
-
+<br><br>
 </div>
 </body>
 </html>

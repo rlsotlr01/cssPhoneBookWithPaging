@@ -715,6 +715,7 @@ public class ContactDAO {
 //				유저 객체를 생성하고, 그 안에 rs가 받은 Setting 합니다.
 				ContactVO contact 		= new ContactVO();
 				contact.setContactnum(rs.getString("contactnum"));
+				contact.setId(rs.getString("id"));
 				contact.setName(rs.getString("name"));
 				contact.setPhone1(rs.getString("phone1"));
 				contact.setPhone2(rs.getString("phone2"));
