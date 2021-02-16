@@ -34,27 +34,15 @@ public class MainServlet extends HttpServlet {
 			response.sendRedirect("LoginServlet");
 		}else if(id.equals("admin")){
 //			관리자 아이디로 로그인 할 시
-			ContactController cc = new ContactController();
-			UserController uc = new UserController();
-			ArrayList<ContactVO> contactlist = cc.searchAll();
-			ArrayList<UserVO> userlist = uc.searchAll();
-			request.setAttribute("contactlist", contactlist);
-			request.setAttribute("userlist",userlist);
-			session = request.getSession();
 			
 			RequestDispatcher disp 
 			= request.getRequestDispatcher("jsp/adminmain.jsp");
 			disp.forward(request, response);	
 		}else{
 //			정상적으로 로그인이 된 상태일 경우 (연락처리스트 뽑아서 main.jsp로 포워딩해서 넘겨줌.)
-			ContactController cc = new ContactController();
 //			id랑 pw를 check 해주는 함수 - uc 에서 select에서 유무 판별
-			ArrayList<ContactVO> contactlist = cc.searchAll(id);
 //			searchfunction
 //			request.setParameter("members",members)
-			
-			
-			request.setAttribute("contactlist", contactlist);
 			
 			RequestDispatcher disp 
 					= request.getRequestDispatcher("jsp/main.jsp");

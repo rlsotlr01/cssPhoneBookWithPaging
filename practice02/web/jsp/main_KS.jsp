@@ -22,16 +22,18 @@
 		pageNum="1";
 	}
 	int currentPage = Integer.parseInt(pageNum);
+	String keyword = request.getParameter("keyword");
+	String searchword = request.getParameter("searchword");
 	
 	int startRow = (currentPage-1)*pageSize+1;
 	int endRow = currentPage*pageSize;
 	int count=0;
 	ContactDAO contactDAO = new ContactDAO();
-	count = contactDAO.getCount_admin();
+	count = contactDAO.getCount_KS(id, searchword, keyword);
 	
 	ArrayList<ContactVO> contactlist = null;
 	if(count>0){
-		contactlist = contactDAO.searchAll(id, startRow, endRow);
+		contactlist = contactDAO.searchByKS(keyword, searchword, id, startRow, endRow);
 	}
 %>
 
@@ -113,7 +115,7 @@
 							
 							if(startPage > pageBlock){ // 페이지 블록수보다 startPage가 클경우 이전 링크 생성
 					%>
-								<a href="<%=request.getContextPath()%>/jsp/main.jsp?pageNum=<%=startPage - 10%>" class="page">[이전]</a>	
+								<a href="<%=request.getContextPath()%>/jsp/main_KS.jsp?pageNum=<%=startPage - 10%>" class="page">[이전]</a>	
 					<%			
 							}
 							
@@ -124,14 +126,14 @@
 					<%									
 								}else{ // 현재 페이지가 아닌 경우 링크 설정
 					%>
-									<a href="<%=request.getContextPath()%>/jsp/main.jsp?pageNum=<%=i%>" class="page">[<%=i %>]</a>
+									<a href="<%=request.getContextPath()%>/jsp/main_KS.jsp?pageNum=<%=i%>" class="page">[<%=i %>]</a>
 					<%	
 								}
 							} // for end
 							
 							if(endPage < pageCount){ // 현재 블록의 마지막 페이지보다 페이지 전체 블록수가 클경우 다음 링크 생성
 					%>
-								<a href="<%=request.getContextPath()%>/jsp/main.jsp?pageNum=<%=startPage + 10 %>" class="page">[다음]</a>
+								<a href="<%=request.getContextPath()%>/jsp/main_KS.jsp?pageNum=<%=startPage + 10 %>" class="page">[다음]</a>
 					<%			
 							}
 						}

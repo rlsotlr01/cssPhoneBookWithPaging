@@ -34,21 +34,14 @@ public class SearchUserServletKS extends HttpServlet {
 		System.out.println("SearchUserServlet 접속 테스트");
 		
 		if(searchword==null && id.equals("admin")) {
-			System.out.println("SearchUserServlet 1 if");
 			request.setAttribute("msg", "검색어를 입력해주세요.");
 			RequestDispatcher disp = request.getRequestDispatcher("MainServlet");
 			disp.forward(request, response);
 		}else if(searchword!=null && id.equals("admin")) {
-			System.out.println("SearchUserServlet 2 if");
-			UserController uc = new UserController();
-			ArrayList<UserVO> userlist = uc.searchAll_KS(keyword, searchword);
-			request.setAttribute("userlist", userlist);
-			session = request.getSession();
 			RequestDispatcher disp 
 				= request.getRequestDispatcher("jsp/adminmain_user.jsp");
 			disp.forward(request, response);
 		}else {
-			System.out.println("SearchUserServlet 3 if");
 			RequestDispatcher disp = request.getRequestDispatcher("MainServlet");
 			disp.forward(request, response);
 		}

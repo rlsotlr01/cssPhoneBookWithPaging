@@ -346,20 +346,11 @@ public class UserDAO {
 		StringBuilder sql 		= new StringBuilder();
 		int count = 0;
 		
-		sql.append("SELECT count(*)										");
-		sql.append("  FROM (SELECT c.contactnum								");
-		sql.append("  			 , c.id										");
-		sql.append("  			 , c.name									");
-		sql.append("  			 , c.phone1									");
-		sql.append("  			 , c.phone2									");
-		sql.append("  			 , c.phone3									");
-		sql.append("  			 , c.address								");
-		sql.append("  			 , c.groupno								");
-		sql.append("  			 , c.phone1 || c.phone2 || c.phone3 as phone");
-		sql.append("  		  FROM contact c) c								");
-		sql.append("	 , group_table g									");
-		sql.append(" WHERE c.groupno = g.groupno							");
-		sql.append("   AND 											");
+		sql.append("SELECT count(*) as count							");
+		sql.append("  FROM (select name,id,phone1,phone2,phone3, 		");
+		sql.append("  			   phone1||phone2||phone3 as phone  	");
+		sql.append("  		  FROM member)  							     ");
+		sql.append(" WHERE  							     ");
 		sql.append(keyword);
 		sql.append(" like ?");
 		
@@ -368,9 +359,11 @@ public class UserDAO {
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, "%"+searchword+"%");
 			rs = pstmt.executeQuery();
-			
 			if(rs.next()) {
-				count = rs.getInt("count(*)");
+				System.out.println("userDAO count KS 돌아감 : "+ count);
+				System.out.println(searchword);
+				System.out.println(keyword);
+				count = rs.getInt("count");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -466,10 +459,10 @@ public class UserDAO {
 		sql.append("  			   m.phone1 || m.phone2 || m.phone3 as phone,	");
 		sql.append("  			   gender										");
 		sql.append("  		  FROM member m) m 									");
-		sql.append("  WHERE rn BETWEEN ?(시작점) AND ?(끝점)						");
-		sql.append("    AND						");
+		sql.append("  WHERE rn BETWEEN ? AND ?									");
+		sql.append("    AND														");
 		sql.append(keyword);
-		sql.append("  LIKE ?");
+		sql.append("  LIKE ?													");
 		
 		
 		try {

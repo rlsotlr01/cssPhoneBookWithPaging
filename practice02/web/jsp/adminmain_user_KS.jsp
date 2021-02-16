@@ -24,17 +24,19 @@
 	if(pageNum==null){
 		pageNum="1";
 	}
+	String searchword = request.getParameter("searchword");
+	String keyword = request.getParameter("keyword");
 	int currentPage = Integer.parseInt(pageNum);
 	
 	int startRow = (currentPage-1)*pageSize+1;
 	int endRow = currentPage*pageSize;
 	int count=0;
 	UserDAO userDAO = new UserDAO();
-	count = userDAO.getCount_admin();
+	count = userDAO.getCount_KS_admin(searchword, keyword);
 	
 	ArrayList<UserVO> userlist = null;
 	if(count>0){
-		userlist = userDAO.searchAll(startRow, endRow);
+		userlist = userDAO.searchAll_KS(keyword, searchword, startRow, endRow);
 	}
 %>
 
@@ -57,7 +59,7 @@
 	<!-- SearchServlet 에서 select 해서 이름 검색, LIKE %search% 이렇게. -->
 	<input type="submit" name = "searching" value="검색">
 </form>
-<a href="<%=request.getContextPath()%>/MainServlet"><img src="<%=request.getContextPath()%>/img/home.png" border="0" width="30" height="30" align="center"></a>
+<a href="<%=request.getContextPath()%>/jsp/adminmain_user.jsp"><img src="<%=request.getContextPath()%>/img/home.png" border="0" width="30" height="30" align="center"></a>
 <!-- adminmain_user 에 추가버튼 서블릿 아직 안만듬 -->
 <br/>
 <span style="color: red;">${msg }</span>
@@ -100,7 +102,29 @@
 		}
 	%>
 			
-
+<!-- 페이징처리 연습 -->
+<%-- 	<c:forEach var="user1" items="${userlist}">
+	<tr  class="listing">
+		<td>
+			${user1.name}
+		</td>
+		<td>
+			${user1.id}
+		</td>
+		<td>
+			${user1.phone1}-${user1.phone2}-${user1.phone3}
+		</td>
+		<td>
+			${user1.gender}
+		</td>
+		<td>
+			<a href="ModifyUserServlet?id=${user1.id}" class="listing">수정</a>
+		</td>
+		<td>
+			<a href="DeleteUserServlet?id=${user1.id}" class="listing">삭제</a>
+		</td>
+	</tr>
+	</c:forEach> --%>
 	<tr>
 				<td colspan="6" align="center">
 					<%	// 페이징  처리

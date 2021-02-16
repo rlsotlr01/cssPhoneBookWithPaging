@@ -10,14 +10,15 @@
 <meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
-<title>연락처 웹사이트</title>
+<title>연락처 웹사이트 - 운영자 연락처보기</title>
 </head>
 <body>
 
 <%
 	int pageSize = 10;
 	String pageNum = request.getParameter("pageNum");
-	String id = (String) session.getAttribute("id");
+	String searchword = request.getParameter("searchword");
+	String keyword = request.getParameter("keyword");
 	if(pageNum==null){
 		pageNum="1";
 	}
@@ -27,45 +28,46 @@
 	int endRow = currentPage*pageSize;
 	int count=0;
 	ContactDAO contactDAO = new ContactDAO();
-	count = contactDAO.getCount_admin();
+	count = contactDAO.getCount_KS_admin(searchword, keyword);
 	
 	ArrayList<ContactVO> contactlist = null;
 	if(count>0){
-		contactlist = contactDAO.searchAll(id, startRow, endRow);
+		contactlist = contactDAO.searchByKS_admin(keyword, searchword, startRow, endRow);
+		
 	}
 %>
 
-<div id="main-box" class ="bgimg">
-	<br/>
-	<img src="<%=request.getContextPath()%>/img/phonecloud.jpg" width="80" height="80">
-	<h2>${name}님 환영합니다</h2>
-	<button class="social-signin"><a href="<%=request.getContextPath()%>/LogoutServlet">로그아웃</a></button>
-	<button class="social-signin"><a href="<%=request.getContextPath()%>/ModifyUserServlet">회원정보수정</a></button>
-	<form action="<%=request.getContextPath()%>/jsp/main_KS.jsp" method="get">
-		<select name="keyword">
-			<option value="name">이름</option>
-			<option value="phone">연락처</option>
-			<option value="address">주소</option>
-		</select>
-		<input type="text" name="searchword">
-		<!-- SearchServlet 에서 select 해서 이름 검색, LIKE %search% 이렇게. -->
-		<input type="submit" name = "searching" value="검색">
-	</form>
-	<button class="social-signin"><a href="<%=request.getContextPath()%>/InsertContactServlet">연락처 추가</a></button> 
-	<a href="<%=request.getContextPath()%>/MainServlet"><img src="<%=request.getContextPath()%>/img/home.png" border="0" width="30" height="30" align="center"></a>
-	<!-- LogoutServlet, ModifyServlet, InsertServlet 만들어야 함. -->
-	 
-	<br/>
-	<span style="color: red;">${msg }</span>
-	<table>
-		<tr>
-			<th>이름</th>
-			<th>연락처</th>
-			<th>주소</th>
-			<th>구분</th>
-			<th>수정</th>
-			<th>삭제</th>
-		</tr>
+<div id="adminmain-box" class ="bgimg">
+<br/>
+<img src="<%=request.getContextPath()%>/img/phonecloud.jpg" width="80" height="80">
+<h2>${name}님 환영합니다  &nbsp; <img src="<%=request.getContextPath()%>/img/cellphone.png" width="30" height="30"> </h2>
+<button class="social-signin"><a href="<%=request.getContextPath()%>/LogoutServlet">로그아웃</a></button>
+<button class="social-signin"><a href="<%=request.getContextPath()%>/SearchUserServlet">회원 보기</a></button>
+<form action="<%=request.getContextPath()%>/jsp/adminmain_KS.jsp" method="get">
+	<select name="keyword">
+		<option value="name">이름</option>
+		<option value="phone">연락처</option>
+		<option value="address">주소</option>
+	</select>
+	<input type="text" name="searchword">
+	<!-- SearchServlet 에서 select 해서 이름 검색, LIKE %search% 이렇게. -->
+	<input type="submit" name = "searching" value="검색">
+</form>
+<a href="<%=request.getContextPath()%>/MainServlet"><img src="<%=request.getContextPath()%>/img/home.png" border="0" width="30" height="30" align="center"></a>
+
+<br/>
+<span style="color: red;">${msg }</span>
+<table>
+	<tr>
+		<th>아이디</th>
+		<th>이름</th>
+		<th>연락처</th>
+		<th>주소</th>
+		<th>구분</th>
+		<th>수정</th>
+		<th>삭제</th>
+	</tr>
+	
 		<%
 		if (count>0){ // 데이터베이스가 있으면
 			int number = count - (currentPage-1)*pageSize;
@@ -74,6 +76,7 @@
 		
 		%>
 		<tr>
+		<td><%=contact.getId() %></td>
 		<td><%=contact.getName() %></td>
 		<td><%=contact.getPhone1()%>-<%=contact.getPhone2()%>-<%=contact.getPhone3()%></td>
 		<td><%=contact.getAddress() %></td>
@@ -113,7 +116,7 @@
 							
 							if(startPage > pageBlock){ // 페이지 블록수보다 startPage가 클경우 이전 링크 생성
 					%>
-								<a href="<%=request.getContextPath()%>/jsp/main.jsp?pageNum=<%=startPage - 10%>" class="page">[이전]</a>	
+								<a href="<%=request.getContextPath()%>/jsp/adminmain_KS.jsp?pageNum=<%=startPage - 10%>" class="page">[이전]</a>	
 					<%			
 							}
 							
@@ -124,23 +127,23 @@
 					<%									
 								}else{ // 현재 페이지가 아닌 경우 링크 설정
 					%>
-									<a href="<%=request.getContextPath()%>/jsp/main.jsp?pageNum=<%=i%>" class="page">[<%=i %>]</a>
+									<a href="<%=request.getContextPath()%>/jsp/adminmain_KS.jsp?pageNum=<%=i%>" class="page">[<%=i %>]</a>
 					<%	
 								}
 							} // for end
 							
 							if(endPage < pageCount){ // 현재 블록의 마지막 페이지보다 페이지 전체 블록수가 클경우 다음 링크 생성
 					%>
-								<a href="<%=request.getContextPath()%>/jsp/main.jsp?pageNum=<%=startPage + 10 %>" class="page">[다음]</a>
+								<a href="<%=request.getContextPath()%>/jsp/adminmain_KS.jsp?pageNum=<%=startPage + 10 %>" class="page">[다음]</a>
 					<%			
 							}
 						}
 					%>
 				</td>
 			</tr>
-		
-	</table>
-	<br/>
+
+</table>
+<br/>
 </div>
 </body>
 </html>
