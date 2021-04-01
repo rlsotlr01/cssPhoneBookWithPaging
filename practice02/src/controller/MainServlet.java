@@ -17,41 +17,42 @@ import dao.contact.ContactDAO;
 import vo.contact.ContactVO;
 import vo.user.UserVO;
 
+/**
+ * @작성자 : 김동윤
+ * @작성일 : 2021. 2. 18.
+ * @filename : MainServlet.java
+ * @package : controller
+ * @description : 메인화면을 컨트롤하는 서블릿입니다.
+ */
 @WebServlet("/MainServlet")
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public MainServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public MainServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 //		Post 로 들어오는 건 Form 뿐이므로 Form에 대한 조건처리만 해주면 됨.
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
-		if(id==null) {
+		if (id == null) {
 //			로그인이 안 되어 있는 상태일 경우 (LoginServlet - doGet)
 			response.sendRedirect("LoginServlet");
-		}else if(id.equals("admin")){
+		} else if (id.equals("admin")) {
 //			관리자 아이디로 로그인 할 시
-			
-			RequestDispatcher disp 
-			= request.getRequestDispatcher("jsp/adminmain.jsp");
-			disp.forward(request, response);	
-		}else{
+			RequestDispatcher disp = request.getRequestDispatcher("jsp/adminmain.jsp");
+			disp.forward(request, response);
+		} else {
 //			정상적으로 로그인이 된 상태일 경우 (연락처리스트 뽑아서 main.jsp로 포워딩해서 넘겨줌.)
-//			id랑 pw를 check 해주는 함수 - uc 에서 select에서 유무 판별
-//			searchfunction
-//			request.setParameter("members",members)
-			
-			RequestDispatcher disp 
-					= request.getRequestDispatcher("jsp/main.jsp");
-			disp.forward(request, response);				
+			RequestDispatcher disp = request.getRequestDispatcher("jsp/main.jsp");
+			disp.forward(request, response);
 		}
 	}
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 //		MainServlet 은 Post 로 들어올 일이 딱히 없다. 	
 	}
 }

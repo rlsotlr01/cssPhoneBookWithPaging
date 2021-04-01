@@ -11,11 +11,19 @@ import javax.servlet.RequestDispatcher;
 
 import vo.contact.ContactVO;
 
+
+/**
+ * @작성자 : 김동윤
+ * @작성일 : 2021. 2. 18.
+ * @filename : ContactDAO.java
+ * @package : dao.contact
+ * @description : 연락처를 DB랑 연동해주고 다양한 기능을 해주는 연락처DAO 클래스입니다.
+ */
 public class ContactDAO {
 
 //	DB와 자바 사이의 커넥션을 만들어 주는 함수입니다.
 	private Connection getConnection(){
-		Connection con = null;
+		Connection con 		= null;
 //		url 로는 오라클 서버까지의 경로를 지정해줍니다.
 		String url 			= "jdbc:oracle:thin:@localhost:1521:xe"; 
 //		오라클 서버에 가입된 유저의 아이디와 비밀번호를 지정해줍니다.
@@ -156,16 +164,19 @@ public class ContactDAO {
 //		ORACLE SQL 에서 Select 구문을 sql에 삽입합니다.
 		sql.append("SELECT *				");
 		sql.append("  FROM (SELECT ROW_NUMBER() OVER(ORDER BY contactnum ASC) AS rn,	");
-		sql.append("	 			id, contactnum, name,								");
+		sql.append("	 			id, contactnum, name, 								");
 		sql.append("	 			phone1, phone2, phone3,								");
-		sql.append("     			address, c.groupno, g.groupnm						");
-		sql.append("     	  FROM contact c, group_table g								");
-		sql.append("         WHERE c.groupno = g.groupno)								");
-		sql.append(" WHERE id = ?														");
-		sql.append("   AND rn BETWEEN ? AND ?											");
+		sql.append("     			phone, address,										");
+		sql.append("     	 		groupno, groupnm									");
+		sql.append("         FROM (select id, contactnum, name,							");
+		sql.append(" 						phone1, phone2, phone3,						");
+		sql.append("   						phone1 || phone2 ||phone3 as phone,			");
+		sql.append("   						address, c.groupno, g.groupnm				");
+		sql.append("   				FROM contact c, group_table g						");
+		sql.append("   				WHERE c.groupno = g.groupno)						");
+		sql.append("   		 WHERE   id = ?)											");
+		sql.append("   		WHERE rn BETWEEN ? AND ?									");
 		
-		 
-		  
 		try {
 //			prepareStatement 의 파라미터로는 String 만 받을 수 있으므로,
 //			StringBuilder -> String 으로 변환해줍니다.
@@ -362,8 +373,6 @@ public class ContactDAO {
 			close(con, pstmt, rs);
 		}
 		
-		System.out.println(contact.getName());
-		System.out.println(contact.getContactnum());
 		return contact;
 	}
 
@@ -374,7 +383,6 @@ public class ContactDAO {
 		PreparedStatement pstmt = null;
 		int rowcnt = 0;
 		
-		System.out.println("ContactDAO contactnum : "+contact.getContactnum());
 		// contactnum 이 null 이야.
 		StringBuilder query = new StringBuilder();
 		query.append("UPDATE contact			");
@@ -411,9 +419,6 @@ public class ContactDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
-		System.out.println("ContactDAO 테스트");
-		System.out.println("ContactDAO contactnum : "+contactnum);
-		// contactnum 이 null 이야.
 		String query = "DELETE contact WHERE contactnum = ?";
 		
 		try {
@@ -498,9 +503,6 @@ public class ContactDAO {
 		sql.append("   AND 											");
 		sql.append(keyword);
 		sql.append(" like ?");
-		System.out.println("StringBuilder 테스트 cDAO=====");
-		System.out.print(sql.toString());
-		System.out.println("StringBuilder 테스트 cDAO=====");
 		
 		try {
 //			prepareStatement 의 파라미터로는 String 만 받을 수 있으므로,
@@ -574,9 +576,6 @@ public class ContactDAO {
 		sql.append("   AND 													");
 		sql.append(keyword);
 		sql.append(" like ?");
-		System.out.println("StringBuilder 테스트 cDAO=====");
-		System.out.print(sql.toString());
-		System.out.println("StringBuilder 테스트 cDAO=====");
 		
 		try {
 //			prepareStatement 의 파라미터로는 String 만 받을 수 있으므로,
@@ -628,17 +627,21 @@ public class ContactDAO {
 //		ORACLE SQL 에서 Select 구문을 sql에 삽입합니다.
 		sql.append("SELECT *				");
 		sql.append("  FROM (SELECT ROW_NUMBER() OVER(ORDER BY contactnum ASC) AS rn,	");
-		sql.append("	 			id, contactnum, name,								");
+		sql.append("	 			id, contactnum, name, 								");
 		sql.append("	 			phone1, phone2, phone3,								");
-		sql.append("	 			phone1 || phone2 ||phone3 as phone,					");
-		sql.append("     			address, c.groupno, g.groupnm						");
-		sql.append("     	  FROM contact c, group_table g								");
-		sql.append("         WHERE c.groupno = g.groupno)								");
-		sql.append(" WHERE id = ?														");
-		sql.append("   AND 																");
+		sql.append("	 			phone, address,										");
+		sql.append("     			groupno, groupnm									");
+		sql.append("     	 	FROM (select id, contactnum, name,						");
+		sql.append("     	 			     phone1, phone2, phone3,					");
+		sql.append("     	 				 phone1 || phone2 ||phone3 as phone,		");
+		sql.append("     	 				 address, c.groupno, g.groupnm				");
+		sql.append("     	 			FROM contact c, group_table g					");
+		sql.append("          		   WHERE c.groupno = g.groupno)						");
+		sql.append("   			WHERE   									 			");
 		sql.append(keyword);
-		sql.append(" like ?																");
-		sql.append("   AND rn BETWEEN ? AND ?											");
+		sql.append(" 	like ?															");
+		sql.append(" 			  AND id = ?)											");
+		sql.append(" WHERE rn BETWEEN ? AND ?											");
 		
 		try {
 //			prepareStatement 의 파라미터로는 String 만 받을 수 있으므로,
@@ -646,8 +649,8 @@ public class ContactDAO {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 //			그 sql을 실행시켜 결과를 받아들이고 이를 rs에 담습니다.
-			pstmt.setString(1, id);
-			pstmt.setString(2, "%"+searchword+"%");
+			pstmt.setString(1, "%"+searchword+"%");
+			pstmt.setString(2, id);
 			pstmt.setString(3, String.valueOf(startRow));
 			pstmt.setString(4, String.valueOf(endRow));
 			rs = pstmt.executeQuery();
@@ -689,16 +692,20 @@ public class ContactDAO {
 //		ORACLE SQL 에서 Select 구문을 sql에 삽입합니다.
 		sql.append("SELECT *				");
 		sql.append("  FROM (SELECT ROW_NUMBER() OVER(ORDER BY contactnum ASC) AS rn,	");
-		sql.append("	 			id, contactnum, name,								");
+		sql.append("	 			id, contactnum, name, 								");
 		sql.append("	 			phone1, phone2, phone3,								");
-		sql.append("	 			phone1 || phone2 ||phone3 as phone,					");
-		sql.append("     			address, c.groupno, g.groupnm						");
-		sql.append("     	  FROM contact c, group_table g								");
-		sql.append("         WHERE c.groupno = g.groupno)								");
-		sql.append(" WHERE 														");
+		sql.append("	 			phone, address,										");
+		sql.append("     			groupno, groupnm									");
+		sql.append("     	 	FROM (select id, contactnum, name,						");
+		sql.append("     	 			     phone1, phone2, phone3,					");
+		sql.append("     	 				 phone1 || phone2 ||phone3 as phone,		");
+		sql.append("     	 				 address, c.groupno, g.groupnm				");
+		sql.append("     	 			FROM contact c, group_table g					");
+		sql.append("          		   WHERE c.groupno = g.groupno)						");
+		sql.append("   			WHERE   									 			");
 		sql.append(keyword);
-		sql.append(" like ?																");
-		sql.append("   AND rn BETWEEN ? AND ?											");
+		sql.append(" 	like ?)															");
+		sql.append(" WHERE rn BETWEEN ? AND ?											");
 		
 		try {
 //			prepareStatement 의 파라미터로는 String 만 받을 수 있으므로,
@@ -764,7 +771,6 @@ public class ContactDAO {
 			close(con, pstmt, rs);
 		}
 		
-		System.out.println("cDAO getCount 테스트 : count(*) 갯수");
 		return count;
 	}
 	
@@ -795,7 +801,6 @@ public class ContactDAO {
 			close(con, pstmt, rs);
 		}
 		
-		System.out.println("cDAO getCount 테스트 : id 있는거 count(*) 갯수");
 		return count;
 	}
 

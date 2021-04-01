@@ -10,7 +10,7 @@
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-<title>회원가입</title>
+<title>phone cloud - 회원가입</title>
 <style type="text/css">
 
 </style>
@@ -44,66 +44,75 @@ $(document).ready(function() {
 		
 </head>
 <body>
-<div id="join-box">
-  <div>
-  <a href="<%=request.getContextPath()%>/MainServlet"><img src="<%=request.getContextPath()%>/img/joinForm/x_button.jpg" border="0" width="15" height="15" align="right"></a>
-  <br>
-    <h2>회원가입</h2><br/>
-    <span style="color: red;">${msg }</span>
-    <form action="<%=request.getContextPath()%>/JoinServlet" method="post">
-	    <input type="text" name="name" class="name" placeholder="이름" /><br>
-	    <input type="text" name="id" id="id" class="id" placeholder="아이디 입력" />
-	    &nbsp
-	    <!-- <button class="duplicate_check">중복확인</button> -->
-	    
-	    <!-- 부트스트랩 테스트 -->
-		<!-- Button trigger modal -->
-		<button type="button" value="중복확인" id="ajax_idDuplicate" class="social-signin" data-bs-toggle="modal" data-bs-target="#checkModal">
-		중복확인
-		</button>
-		<!-- Modal -->
-		<div class="modal fade" id="checkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">아이디 중복 확인</h5>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body" id="checkMessage">
-		      <!-- 적을 내용 (알람창) -->
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class = "social-signin" data-bs-dismiss="modal">닫기</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+<div class="main_window">
+     <div class="cloud" data-type="white_4" style="top: 238px;" data-speed="1"></div>
+     <div class="cloud" data-type="white_4" style="top: 410px;" data-speed="6"></div>
+     <div class="cloud" data-type="white_6" style="top: 197px;" data-speed="8"></div>
+     <div class="cloud" data-type="white_5" style="top: 133px;" data-speed="11"></div>
+     <div class="cloud" data-type="white_5" style="top: 126px;" data-speed="12"></div>
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
-	    <!-- 부트스트랩 테스트 -->
+	<div id="join-box">
+	  <div>
+	  <a href="<%=request.getContextPath()%>/MainServlet"><img src="<%=request.getContextPath()%>/img/joinForm/x_button.jpg" border="0" width="15" height="15" align="right"></a>
+	  <br>
+	    <h2>회원가입</h2><br/>
+	    <span style="color: red;">${msg }</span>
+	    <form action="<%=request.getContextPath()%>/JoinServlet" method="post">
+		    <input type="text" name="name" class="name" placeholder="이름" /><br>
+		    <input type="text" name="id" id="id" class="id" placeholder="아이디 입력" />
+		    &nbsp
+		    <!-- <button class="duplicate_check">중복확인</button> -->
+		    
+		    <!-- 부트스트랩 테스트 -->
+			<!-- Button trigger modal -->
+			<button type="button" value="중복확인" id="ajax_idDuplicate" class="social-signin" data-bs-toggle="modal" data-bs-target="#checkModal">
+			중복확인
+			</button>
+			<!-- Modal -->
+			<div class="modal fade" id="checkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">아이디 중복 확인</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body" id="checkMessage">
+			      <!-- 적을 내용 (알람창) -->
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class = "social-signin" data-bs-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+	
+		    <!-- 부트스트랩 테스트 -->
+		    
+		    
+		    
+		    <input type="password" name="pw" placeholder="비밀번호 입력" /><br>
+	    연락처 : <br/><select name="phone1">
+			<option value="010">010</option>
+			<option value="011">011</option>
+			<option value="016">016</option>
+			<option value="018">018</option>
+			<option value="019">019</option>
+			</select>
+			-<input type="text" class="phone" name="phone2">
+			-<input type="text" class="phone" name="phone3"><br>
+			성별 : 
+			남자 <input type="radio" name="gender" value="man">
+			여자 <input type="radio" name="gender" value="woman"><br>
+	    	<input type="submit" name="signup_submit" value="회원가입" />
+	    </form>
+	    <br>
+	<a href="<%=request.getContextPath()%>/MainServlet"><img src="<%=request.getContextPath()%>/img/home.png" border="0" width="30" height="30" align="center"></a>
+	    <br>
+	    <br>
 	    
-	    
-	    
-	    <input type="password" name="pw" placeholder="비밀번호 입력" /><br>
-    연락처 : <br/><select name="phone1">
-		<option value="010">010</option>
-		<option value="011">011</option>
-		<option value="016">016</option>
-		<option value="018">018</option>
-		<option value="019">019</option>
-		</select>
-		-<input type="text" class="phone" name="phone2">
-		-<input type="text" class="phone" name="phone3"><br>
-		성별 : 
-		남자 <input type="radio" name="gender" value="man">
-		여자 <input type="radio" name="gender" value="woman"><br>
-    	<input type="submit" name="signup_submit" value="회원가입" />
-    </form>
-    <br>
-<a href="<%=request.getContextPath()%>/MainServlet"><img src="<%=request.getContextPath()%>/img/home.png" border="0" width="30" height="30" align="center"></a>
-    <br>
-    <br>
-    
+	  </div>
+	  </div>
   </div>
-  <div>
 </body>
 </html>

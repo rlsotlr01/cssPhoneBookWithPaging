@@ -1,5 +1,13 @@
 package vo.user;
 
+
+/**
+ * @작성자 : 김동윤
+ * @작성일 : 2021. 2. 18.
+ * @filename : UserVO.java
+ * @package : vo.user
+ * @description : 회원 vo 클래스 입니다.
+ */
 public class UserVO {
 	public String name;
 	public String id;

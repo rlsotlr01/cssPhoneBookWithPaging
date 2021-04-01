@@ -10,10 +10,17 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
-<title>로그인창</title>
+<title>phone cloud - 로그인</title>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+  <div class="main_window">
+     <div class="cloud" data-type="white_4" style="top: 238px;" data-speed="1"></div>
+     <div class="cloud" data-type="white_4" style="top: 410px;" data-speed="6"></div>
+     <div class="cloud" data-type="white_6" style="top: 197px;" data-speed="8"></div>
+     <div class="cloud" data-type="white_5" style="top: 133px;" data-speed="11"></div>
+     <div class="cloud" data-type="white_5" style="top: 126px;" data-speed="12"></div>
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
  <div id="login-box">
  <br/>
@@ -25,8 +32,12 @@
 	<input type="text" name="id" placeholder="아이디"><br/>
 		<input type="password" name="pw" placeholder="비밀번호"><br>
 		<input type="submit" value="로그인">
-	<button class="social-signin"><a href="<%=request.getContextPath()%>/JoinServlet">회원가입</a>	</button>
+		<button class="social-signin" type="button" onclick="location.href='<%=request.getContextPath()%>/JoinServlet'"><a href="<%=request.getContextPath()%>/JoinServlet">회원가입</a>	</button>
 	</form>
 	</div>
+  </div>
+
+
+
 </body>
 </html>

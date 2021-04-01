@@ -1,5 +1,13 @@
 package vo.contact;
 
+
+/**
+ * @작성자 : 김동윤
+ * @작성일 : 2021. 2. 18.
+ * @filename : ContactVO.java
+ * @package : vo.contact
+ * @description : 연락처 VO 입니다.
+ */
 public class ContactVO {
 	String contactnum;
 //	연락처의 이름을 담습니다.

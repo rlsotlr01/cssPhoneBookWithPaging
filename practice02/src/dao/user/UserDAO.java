@@ -10,11 +10,19 @@ import java.util.ArrayList;
 import vo.contact.ContactVO;
 import vo.user.UserVO;
 
+
+/**
+ * @작성자 : 김동윤
+ * @작성일 : 2021. 2. 18.
+ * @filename : UserDAO.java
+ * @package : dao.user
+ * @description : 회원정보 DB를 연동해주고 관련 모든 기능을 해주는 회원 DAO 클래스 입니다.
+ */
 public class UserDAO {
 	
 //	DB와 자바 사이의 커넥션을 만들어 주는 함수입니다.
 	private Connection getConnection(){
-		Connection con = null;
+		Connection con 		= null;
 //		url 로는 오라클 서버까지의 경로를 지정해줍니다.
 		String url 			= "jdbc:oracle:thin:@localhost:1521:xe"; 
 //		오라클 서버에 가입된 유저의 아이디와 비밀번호를 지정해줍니다.
@@ -34,11 +42,13 @@ public class UserDAO {
 		return con;
 	} // 이 getConnection 은 EmpDAO 에서만 쓰일 것.
 	
+//	DB에 회원 한명을 추가해주는 기능입니다.
 	public int insertUser(UserVO user) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int rowcnt = 0;
 		
+//		오라클 SQL에 기입할 sql 구문을 담습니다.
 		StringBuilder sql = new StringBuilder();
 		sql.append("insert into member		");
 		sql.append("values(?,?,?,?,?,?,?)	");
@@ -47,6 +57,7 @@ public class UserDAO {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			
+//			sql 빈공간에 기입할 각각의 정보를 넣습니다.
 			pstmt.setString(1, user.name);
 			pstmt.setString(2, user.id);
 			pstmt.setString(3, user.pw);
@@ -143,11 +154,14 @@ public class UserDAO {
 		return user;
 	}
 	
+//	id를 통해 유저를 검색하는 기능.
 	public UserVO searchById(String id) {
 		UserVO user = new UserVO();
 		Connection con 			= null;
 		PreparedStatement pstmt = null;
 		ResultSet rs 			= null;
+		
+//		오라클에 기입할 SQL 구문입니다.
 		String query = "SELECT name, id, phone1, phone2, phone3, gender FROM member WHERE id=?";
 		try {
 			con = getConnection();
@@ -170,11 +184,13 @@ public class UserDAO {
 		return user;
 	}
 
+//	DB 내의 회원의 정보를 수정하는 기능.
 	public int updateUser(UserVO user) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int rowcnt = 0;
 		
+//		오라클 sql update 구문을 사용.
 		StringBuilder query = new StringBuilder();
 		query.append("UPDATE member				");
 		query.append("   SET name 		= ?,	");
@@ -186,6 +202,7 @@ public class UserDAO {
 		query.append(" WHERE id			= ?		");
 		
 		try {
+//			DB와 connect 하고, 수정할 정보들을 기입합니다.
 			con = getConnection();
 			pstmt = con.prepareStatement(query.toString());
 			pstmt.setString(1, user.getName());
@@ -204,6 +221,7 @@ public class UserDAO {
 		return rowcnt;
 	}
 
+//	아이디를 중복검사하는 기능.
 	public int idCheck(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -215,9 +233,9 @@ public class UserDAO {
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if(rs.next() || id.equals("")) { // 결과가 있다면
-				return 0; // 이미 존재하는 아이디
+				return 0; // 이미 존재하는 아이디 -> 0 리턴
 			} else {
-				return 1; // 가입 가능한 아이디
+				return 1; // 가입 가능한 아이디 -> 1 리턴
 			} 
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -227,6 +245,7 @@ public class UserDAO {
 		return -1; // 데이터베이스 오류
 	}
 
+//	DB안에 있는 모든 회원의 목록을 출력하는 기능. (미연의 상황을 대비한 여분의 기능)
 	public ArrayList<UserVO> searchAll() {
 		ArrayList<UserVO> userlist = new ArrayList<UserVO>();
 		
@@ -259,6 +278,7 @@ public class UserDAO {
 		return userlist;
 	}
 	
+//	해당 인덱스에 속하는 회원들을 DB에서 가져와 그 목록을 리턴하는 기능 (운영자 전용)
 	public ArrayList<UserVO> searchAll(int startRow, int endRow) {
 		ArrayList<UserVO> userlist = new ArrayList<UserVO>();
 		
@@ -293,7 +313,6 @@ public class UserDAO {
 				user.setPhone3(rs.getString("phone3"));
 				user.setGender(rs.getString("gender"));
 				userlist.add(user);
-				System.out.println(user.getName());
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -329,7 +348,6 @@ public class UserDAO {
 			close(con, pstmt, rs);
 		}
 		
-		System.out.println("uDAO getCount 테스트 : count(*) 갯수");
 		return count;
 	}
 	
@@ -360,9 +378,6 @@ public class UserDAO {
 			pstmt.setString(1, "%"+searchword+"%");
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("userDAO count KS 돌아감 : "+ count);
-				System.out.println(searchword);
-				System.out.println(keyword);
 				count = rs.getInt("count");
 			}
 		}catch(Exception e) {
@@ -371,10 +386,10 @@ public class UserDAO {
 			close(con, pstmt, rs);
 		}
 		
-		System.out.println("cDAO getCount 테스트 : id 있는거 count(*) 갯수");
 		return count;
 	}
 
+//	회원을 id를 통해 DB에서 삭제하는 기능.
 	public void deleteUser(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -398,6 +413,7 @@ public class UserDAO {
 		}
 	}
 
+//	해당 카테고리(keyword - 이름, 연락처 등)에 해당단어(searchword)가 있는 회원들의 목록을 가져오는 기능. (미연의 상황을 대비한 여분의 기능)
 	public ArrayList<UserVO> searchAll_KS(String keyword, String searchword) {
 		ArrayList<UserVO> userlist = new ArrayList<UserVO>();
 		Connection con 				= null;
@@ -443,6 +459,7 @@ public class UserDAO {
 		return userlist;
 	}
 	
+//	해당 카테고리(이름,연락처 등)에 해당 단어(searchword)가 들어있는 회원들의 목록을 인덱스에 맞게 출력하는 기능.
 	public ArrayList<UserVO> searchAll_KS(String keyword, String searchword, int startRow, int endRow) {
 		ArrayList<UserVO> userlist = new ArrayList<UserVO>();
 		Connection con 				= null;
@@ -452,25 +469,27 @@ public class UserDAO {
 		StringBuilder sql 		= new StringBuilder();
 		int count = 0;
 		
-		sql.append("SELECT *													");
-		sql.append("  FROM (SELECT ROW_NUMBER() OVER(ORDER BY name ASC) AS rn,	");
-		sql.append("  			   name, id, pw, 								");
-		sql.append("  			   phone1, phone2, phone3,						");
-		sql.append("  			   m.phone1 || m.phone2 || m.phone3 as phone,	");
-		sql.append("  			   gender										");
-		sql.append("  		  FROM member m) m 									");
-		sql.append("  WHERE rn BETWEEN ? AND ?									");
-		sql.append("    AND														");
+		sql.append("SELECT *															");
+		sql.append("  FROM (SELECT ROW_NUMBER() OVER(ORDER BY name ASC) AS rn,			");
+		sql.append("  			   name, id, pw, 										");
+		sql.append("  			   phone1, phone2, phone3,								");
+		sql.append("  			   phone, gender										");
+		sql.append("  		  FROM (SELECT name, id, pw,								");
+		sql.append("  			   		   phone1, phone2, phone3,						");
+		sql.append("  			   		   m.phone1 || m.phone2 || m.phone3 as phone,	");
+		sql.append("  			   		   gender										");
+		sql.append("  		  		  FROM member m) m 									");
+		sql.append("  		 WHERE  													");
 		sql.append(keyword);
-		sql.append("  LIKE ?													");
-		
+		sql.append("  LIKE ?)															");
+		sql.append("  WHERE rn BETWEEN ? AND ?											");
 		
 		try {
 			con=getConnection();
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, String.valueOf(startRow));
-			pstmt.setString(2, String.valueOf(endRow));
-			pstmt.setString(3, "%"+searchword+"%");
+			pstmt.setString(1, "%"+searchword+"%");
+			pstmt.setString(2, String.valueOf(startRow));
+			pstmt.setString(3, String.valueOf(endRow));
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
